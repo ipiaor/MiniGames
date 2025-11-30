@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>计算器</h1>
+    
+    <div class="input-group">
+        <label for="x">体重:</label>
+        <input type="number" id="x" step="any">
+    </div>
+    
+    <div class="input-group">
+        <label for="y">碳水:</label>
+        <input type="number" id="y" step="any" value="2">
+    </div>
+    
+    <div class="input-group">
+        <label for="z">脂肪:</label>
+        <input type="number" id="z" step="any" value="0.8">
+    </div>
+    
+    <div class="input-group">
+        <label for="o">蛋白质:</label>
+        <input type="number" id="o" step="any" value="1">
+	<span>建议0.8-1.5</span>
+    </div>
+    
+    <button onclick="calculate()">计算</button>
+    
+    <div class="results" id="results">
+        <h2>计算结果</h2>
+        <div class="result-item" id="a">总碳水: </div>
+        <div class="result-item" id="b">总脂肪: </div>
+        <div class="result-item" id="c">总蛋白质: </div>
+        
+        <div class="result-item" id="d">高碳 碳水: </div>
+        <div class="result-item" id="e">高碳 脂肪: </div>
+        
+        <div class="result-item" id="f">中碳 碳水: </div>
+        <div class="result-item" id="g">中碳 脂肪: </div>
+        
+        <div class="result-item" id="h">低碳 碳水: </div>
+        <div class="result-item" id="i">低碳 脂肪: </div>
+        
+        <div class="result-item" id="j">蛋白质: </div>
+    </div>
+    
+    <script>
+        function calculate() {
+            // 获取输入值
+            const x = parseFloat(document.getElementById('x').value) || 0;
+            const y = parseFloat(document.getElementById('y').value) || 0;
+            const z = parseFloat(document.getElementById('z').value) || 0;
+            const o = parseFloat(document.getElementById('o').value) || 0;
+            
+            // 计算第一组数字
+            const a =Math.round( x * y * 7);
+            const b =Math.round( x * z * 7);
+            const c = Math.round(x * o * 7);
+            
+            // 计算第二组数字
+            const d =Math.round( a / 2 / 2);
+            const e = Math.round(b * 0.15 / 2);
+            
+            // 计算第三组数字
+            const f = Math.round(a * 0.35 / 3);
+            const g =Math.round(b * 0.35 / 3);
+            
+            // 计算第四组数字
+            const h =Math.round( a * 0.15 / 2);
+            const i =Math.round( b / 2 / 2);
+            
+            // 计算第五组数字
+            const j = Math.round(c / 7);
+            
+            // 显示结果
+            document.getElementById('a').textContent = `总碳水: ${a}`;
+            document.getElementById('b').textContent = `总脂肪:${b}`;
+            document.getElementById('c').textContent = `总蛋白质: ${c}`;
+            
+            document.getElementById('d').textContent = `高碳 碳水: ${d}`;
+            document.getElementById('e').textContent = `高碳 脂肪: ${e}`;
+            
+            document.getElementById('f').textContent = `中碳 碳水:  ${f}`;
+            document.getElementById('g').textContent = `中碳 脂肪: ${g}`;
+            
+            document.getElementById('h').textContent = `低碳 碳水: ${h}`;
+            document.getElementById('i').textContent = `低碳 脂肪: ${i}`;
+            
+            document.getElementById('j').textContent = `蛋白质: ${j}`;
+        }
+    </script>
+</body>
+</html>

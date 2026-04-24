@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>极简累加器 - 标签版</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 主容器 */
+        .calculator {
+            width: 100%;
+            max-width: 360px;
+            height: 100%;
+            max-height: 700px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* 1. 显示屏 (顶部) */
+        .display {
+            flex: 0 0 auto; /* 不自动伸缩，保持内容高度 */
+            background: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding: 30px 20px;
+            word-break: break-all;
+            min-height: 120px;
+        }
+        .expression { font-size: 1.2rem; color: #888; margin-bottom: 10px; min-height: 24px; }
+        .result { font-size: 3.5rem; font-weight: 300; }
+
+        /* 2. 标签区域 (中间 - 重点修改) */
+        .tag-section {
+            flex: 1; /* 占据剩余空间 */
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* 防止整个区域滚动，只让列表滚动 */
+        }
+        
+        .tag-input-group {
+            padding: 10px 15px;
+            display: flex;
+            gap: 10px;
+            background: #fff;
+        }
+        .tag-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn-add-tag {
+            padding: 10px 15px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* 标签列表 - 可滚动 */
+        .tag-list {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto; /* 仅列表区域滚动 */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 一行3个 */
+            grid-template-rows: masonry; /* 瀑布流布局支持 (可选) */
+            gap: 10px;
+            align-content: start;
+        }
+
+        /* 单个标签样式 - 增大面积 */
+        .tag-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 15px 10px; /* 增加上下内边距 */
+            border-radius: 8px;
+            font-size: 1.1rem; /* 增大字体 */
+            color: #333;
+            display: flex;
+            justify-content: space-between; /* 文字和删除号两端对齐 */
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .tag-item:active {
+            transform: scale(0.98);
+            background: #f0f0f0;
+            border-color: #007AFF;
+        }
+        .tag-val { font-weight: bold; }
+        .tag-close {
+            color: #ccc;
+            font-size: 1.2rem;
+            padding: 0 4px;
+        }
+        .tag-close:hover { color: #ff3b30; }
+
+        /* 3. 键盘区 (底部) */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+        }
+        button {
+            padding: 18px 0;
+            font-size: 1.4rem;
+            border: none;
+            background: #fff;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        button:active { background: #f0f0f0; }
+        
+        .btn-op { color: #007AFF; font-weight: 500; }
+        .btn-eq { background: #007AFF; color: white; }
+        .btn-eq:active { background: #0056b3; }
+        .btn-clear { color: #ff3b30; }
+        .btn-zero { grid-column: span 2; }
+
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <!-- 1. 显示屏 -->
+    <div class="display">
+        <div class="expression" id="exprText"></div>
+        <div class="result" id="resultText">0</div>
+    </div>
+
+    <!-- 2. 标签区域 (已移至中间) -->
+    <div class="tag-section">
+        <div class="tag-input-group">
+            <input type="number" id="tagInput" class="tag-input" placeholder="输入数值 (如 8.88)" step="0.01">
+            <button class="btn-add-tag" onclick="addTag()">+ 标签</button>
+        </div>
+        <div class="tag-list" id="tagListContainer">
+            <!-- 标签会生成在这里 -->
+        </div>
+    </div>
+
+    <!-- 3. 键盘 -->
+    <div class="keypad">
+        <button class="btn-clear" onclick="clearAll()">AC</button>
+        <button onclick="delLast()">⌫</button>
+        <button class="btn-op" onclick="appendOp('%')">%</button>
+        <button class="btn-op" onclick="appendOp('+')">+</button>
+
+        <button onclick="appendNum('7')">7</button>
+        <button onclick="appendNum('8')">8</button>
+        <button onclick="appendNum('9')">9</button>
+        <button class="btn-op" onclick="appendOp('-')">−</button>
+
+        <button onclick="appendNum('4')">4</button>
+        <button onclick="appendNum('5')">5</button>
+        <button onclick="appendNum('6')">6</button>
+        <button style="visibility: hidden;"></button> 
+
+        <button onclick="appendNum('1')">1</button>
+        <button onclick="appendNum('2')">2</button>
+        <button onclick="appendNum('3')">3</button>
+        <button style="visibility: hidden;"></button>
+
+        <button class="btn-zero" onclick="appendNum('0')">0</button>
+        <button onclick="appendNum('.')">.</button>
+        <button class="btn-eq" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    // --- 全局变量 ---
+    let expression = ""; 
+    let tags = []; 
+
+    const exprText = document.getElementById('exprText');
+    const resultText = document.getElementById('resultText');
+    const tagInput = document.getElementById('tagInput');
+    const tagListContainer = document.getElementById('tagListContainer');
+
+    // --- 基础功能函数 ---
+    function vibrate() {
+        if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function update() {
+        exprText.innerText = expression;
+        if (!expression) resultText.innerText = "0";
+    }
+
+    function appendNum(num) {
+        vibrate();
+        if (num === '.' && expression.slice(-1) === '.') return;
+        expression += num;
+        update();
+    }
+
+    function appendOp(op) {
+        vibrate();
+        if (expression === "") return;
+        const lastChar = expression.slice(-1);
+        if (['+', '-', '%'].includes(lastChar)) {
+            expression = expression.slice(0, -1) + op;
+        } else {
+            expression += op;
+        }
+        update();
+    }
+
+    function clearAll() {
+        vibrate();
+        expression = "";
+        update();
+    }
+
+    function delLast() {
+        vibrate();
+        expression = expression.slice(0, -1);
+        update();
+    }
+
+    function calculate() {
+        vibrate();
+        try {
+            if (!expression) return;
+            let result = eval(expression);
+            result = parseFloat(result.toFixed(10));
+            resultText.innerText = result;
+            expression = result.toString();
+        } catch (e) {
+            resultText.innerText = "错误";
+            expression = "";
+        }
+    }
+
+    // --- 标签系统逻辑 ---
+
+    function addTag() {
+        const val = tagInput.value;
+        if (val === "" || isNaN(val)) {
+            alert("请输入有效数字");
+            return;
+        }
+        
+        vibrate();
+        const numVal = parseFloat(val);
+        tags.push(numVal);
+        
+        tagInput.value = "";
+        renderTags();
+    }
+
+    function renderTags() {
+        tagListContainer.innerHTML = "";
+        tags.forEach((tag, index) => {
+            const tagEl = document.createElement('div');
+            tagEl.className = 'tag-item';
+            tagEl.onclick = () => addByTag(index);
+            
+            tagEl.innerHTML = `
+                <span class="tag-val">${tag}</span>
+                <span class="tag-close" onclick="removeTag(event, ${index})">×</span>
+            `;
+            tagListContainer.appendChild(tagEl);
+        });
+    }
+
+    function removeTag(event, index) {
+        event.stopPropagation(); 
+        vibrate();
+        tags.splice(index, 1);
+        renderTags();
+    }
+
+    function addByTag(index) {
+        const val = tags[index];
+        vibrate();
+        
+        let currentVal = 0;
+        try {
+            if (expression) currentVal = eval(expression);
+        } catch(e) {}
+
+        let newVal = currentVal + val;
+        newVal = parseFloat(newVal.toFixed(10));
+        
+        expression = newVal.toString();
+        resultText.innerText = newVal;
+        exprText.innerText = `+ ${val}`;
+    }
+
+    // 暴露全局函数
+    window.addTag = addTag;
+    window.removeTag = removeTag;
+    window.addByTag = addByTag;
+    window.appendNum = appendNum;
+    window.appendOp = appendOp;
+    window.clearAll = clearAll;
+    window.delLast = delLast;
+    window.calculate = calculate;
+
+</script>
+
+</body>
+</html>

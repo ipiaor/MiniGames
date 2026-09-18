@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>徐州+连云港 4天3晚攻略</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: #eef3f5;
+    color: #1c2b33;
+    padding: 14px 12px 40px;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ===== 头部 ===== */
+  header {
+    background: linear-gradient(140deg, #1f4a5c 0%, #2f6b80 55%, #3d8fa3 100%);
+    color: #fff;
+    padding: 22px 18px 20px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 18px rgba(31,74,92,0.25);
+  }
+  header h1 {
+    font-size: 21px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .head-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .head-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.13);
+    padding: 6px 10px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+  .head-meta b { font-weight: 600; }
+
+  /* ===== 速览条 ===== */
+  .quick-bar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    text-align: center;
+  }
+  .quick-item .q-day {
+    font-size: 12px;
+    color: #6b8a96;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .quick-item .q-city {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f4a5c;
+    margin-top: 3px;
+  }
+  .quick-item .q-city small {
+    display: block;
+    font-size: 11px;
+    color: #8aa4ae;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  /* ===== 日程卡片 ===== */
+  .day-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .day-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #dde7ea;
+  }
+  .day-num {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2f6b80, #3d8fa3);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1.1;
+    font-weight: 600;
+  }
+  .day-num b { font-size: 16px; }
+  .day-title-wrap { flex: 1; min-width: 0; }
+  .day-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f4a5c;
+    line-height: 1.35;
+  }
+  .day-sub {
+    font-size: 12px;
+    color: #7d99a4;
+    margin-top: 2px;
+  }
+
+  /* ===== 时间线 ===== */
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+  .tl-item {
+    display: flex;
+    gap: 10px;
+    padding: 7px 0;
+    position: relative;
+    font-size: 14px;
+  }
+  .tl-time {
+    flex-shrink: 0;
+    width: 58px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #3d8fa3;
+    padding-top: 1px;
+    letter-spacing: 0.2px;
+  }
+  .tl-time.wide { width: 72px; font-size: 12px; }
+  .tl-text {
+    flex: 1;
+    color: #2b3d45;
+    line-height: 1.55;
+  }
+  .tl-text .hl {
+    font-weight: 600;
+    color: #1f4a5c;
+  }
+  .tl-text .sub {
+    display: block;
+    font-size: 12.5px;
+    color: #7d99a4;
+    margin-top: 2px;
+  }
+
+  /* 特殊标记 */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 6px;
+    margin-right: 5px;
+    vertical-align: 1px;
+  }
+  .tag.train { background: #e3f0f5; color: #2f6b80; }
+  .tag.food  { background: #fff2e0; color: #c47a1a; }
+  .tag.stay  { background: #e8f4ec; color: #2f7d4f; }
+  .tag.warn  { background: #fdeaea; color: #c0392b; }
+  .tag.tip   { background: #eef0fd; color: #4a56b8; }
+
+  /* 住宿行 */
+  .stay-line {
+    margin-top: 10px;
+    background: #f2f8fa;
+    border-left: 3px solid #3d8fa3;
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #2f6b80;
+  }
+  .stay-line b { color: #1f4a5c; }
+
+  /* ===== 贴士卡片 ===== */
+  .tip-block {
+    background: #fffaf0;
+    border: 1px solid #f5e3c0;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+  }
+  .tip-block.blue {
+    background: #f0f7fa;
+    border-color: #cfe4ec;
+  }
+  .tip-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a86b12;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tip-block.blue .tip-title { color: #1f4a5c; }
+  .tip-block ul {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .tip-block li {
+    font-size: 13.5px;
+    color: #4a5c63;
+    line-height: 1.55;
+  }
+  .tip-block li b { color: #1f4a5c; }
+
+  /* ===== 行李方案 ===== */
+  .luggage-option {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border: 1px solid #e2ecef;
+  }
+  .luggage-option .lo-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f4a5c;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lo-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3d8fa3;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .luggage-option p {
+    font-size: 13px;
+    color: #5c7178;
+    line-height: 1.55;
+    margin-left: 26px;
+  }
+  .recommend-badge {
+    font-size: 10.5px;
+    background: #e8f4ec;
+    color: #2f7d4f;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  /* ===== 底部 ===== */
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: #9ab0b8;
+    padding: 10px 0 0;
+  }
+
+  /* 小屏优化 */
+  @media (max-width: 360px) {
+    body { font-size: 14px; padding: 10px 8px 30px; }
+    .tl-time { width: 52px; font-size: 12px; }
+    .tl-text { font-size: 13.5px; }
+    header h1 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 头部 -->
+  <header>
+    <h1>汉风黄海 · 徐州+连云港<br>4天3晚旅行攻略</h1>
+    <div class="head-meta">
+      <span>🚄 D1 <b>15:25-18:45</b> 上海→徐州东</span>
+      <span>🚄 D3 <b>9:18-10:26</b> 徐州东→连云港</span>
+      <span>🚄 D4 <b>18:55-22:33</b> 连云港→上海</span>
+    </div>
+  </header>
+
+  <!-- 速览 -->
+  <div class="quick-bar">
+    <div class="quick-item">
+      <div class="q-day">D1</div>
+      <div class="q-city">徐州<small>夜游老城</small></div>
+    </div>
+    <div class="quick-item">
+      <div class="q-day">D2</div>
+      <div class="q-city">徐州<small>两汉全天</small></div>
+    </div>
+    <div class="quick-item">
+      <div class="q-day">D3</div>
+      <div class="q-city">连云港<small>连岛日落</small></div>
+    </div>
+    <div class="quick-item">
+      <div class="q-day">D4</div>
+      <div class="q-city">花果山<small>西游返程</small></div>
+    </div>
+  </div>
+
+  <!-- ============ D1 ============ -->
+  <div class="day-card">
+    <div class="day-head">
+      <div class="day-num">D<b>1</b></div>
+      <div class="day-title-wrap">
+        <div class="day-title">上海 → 徐州（晚间抵达）</div>
+        <div class="day-sub">高铁 15:25 - 18:45 ｜ 宿：龙泰大厦</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">15:25</div>
+        <div class="tl-text"><span class="tag train">高铁</span>上海出发前往徐州东站</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:45</div>
+        <div class="tl-text"><span class="hl">抵达徐州东站</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">19:30</div>
+        <div class="tl-text">地铁1号线到彭城广场站，步行至龙泰大厦放行李
+          <span class="sub">地铁约30分钟，出站步行约530米</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">20:00</div>
+        <div class="tl-text">回龙窝 + 文庙街区夜景闲逛</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">21:00</div>
+        <div class="tl-text"><span class="tag food">夜宵</span>富国街：笑笑凉皮、烤肉筋、米线</div>
+      </div>
+    </div>
+    <div class="stay-line">
+      🏨 <b>住宿：</b>鼓楼区龙泰大厦（市中心核心区，紧邻1818夜市）
+    </div>
+  </div>
+
+  <!-- ============ D2 ============ -->
+  <div class="day-card">
+    <div class="day-head">
+      <div class="day-num">D<b>2</b></div>
+      <div class="day-title-wrap">
+        <div class="day-title">周六 · 徐州全天（两汉老城）</div>
+        <div class="day-sub">博物馆 + 户部山 + 云龙湖 ｜ 宿：龙泰大厦</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">08:45</div>
+        <div class="tl-text">出门</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">09:00</div>
+        <div class="tl-text"><span class="tag warn">预约</span>入馆<b>【徐州博物馆 + 乾隆行宫】</b>
+          <span class="sub">提前7天20点抢预约，带身份证入馆</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:00</div>
+        <div class="tl-text">户部山 + 戏马台</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-text"><span class="tag food">午餐</span>丰储街：把子肉、烙馍卷馓子</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">14:00–17:30</div>
+        <div class="tl-text">云龙山登高 + 云龙湖环湖，等待日落</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:30</div>
+        <div class="tl-text"><span class="tag food">晚餐</span>徐州烧烤（提前电话订位）或地锅鸡</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">21:00</div>
+        <div class="tl-text"><span class="tag tip">提示</span>晚上收拾行李，D3全部行李随身带走</div>
+      </div>
+    </div>
+    <div class="stay-line">
+      🏨 <b>住宿：</b>龙泰大厦
+    </div>
+  </div>
+
+  <!-- ============ D3 ============ -->
+  <div class="day-card">
+    <div class="day-head">
+      <div class="day-num">D<b>3</b></div>
+      <div class="day-title-wrap">
+        <div class="day-title">周日 · 徐州 → 连云港</div>
+        <div class="day-sub">高铁 9:18 - 10:26 ｜ 宿：墟沟</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">07:30</div>
+        <div class="tl-text"><span class="tag warn">必看</span>龙泰大厦退房，行李全部随身携带</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">07:45</div>
+        <div class="tl-text">地铁1号线前往徐州东站</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">08:25</div>
+        <div class="tl-text">抵达徐州东站，安检候车</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">09:18</div>
+        <div class="tl-text"><span class="tag train">高铁</span>徐州东发车</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:26</div>
+        <div class="tl-text"><span class="hl">抵达连云港站</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:45</div>
+        <div class="tl-text">打车前往墟沟酒店
+          <span class="sub">车程约40–50分钟，周末可能更久</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-text">墟沟酒店寄存行李</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:45</div>
+        <div class="tl-text"><span class="tag food">午餐</span>墟沟简餐</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-text">出发前往连岛景区</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">13:00–18:30</div>
+        <div class="tl-text">游玩连岛：大沙湾、苏马湾、沿海栈道，海边日落
+          <span class="sub">观光车建议必买，注意末班时间</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:30</div>
+        <div class="tl-text">返回墟沟</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">19:15</div>
+        <div class="tl-text"><span class="tag food">晚餐</span>墟沟海鲜晚餐</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">20:30</div>
+        <div class="tl-text">在海一方公园散步吹海风</div>
+      </div>
+    </div>
+    <div class="stay-line">
+      🏨 <b>住宿：</b>连云区墟沟（推荐近在海一方公园 / 嘉瑞宝广场）
+    </div>
+  </div>
+
+  <!-- ============ D4 ============ -->
+  <div class="day-card">
+    <div class="day-head">
+      <div class="day-num">D<b>4</b></div>
+      <div class="day-title-wrap">
+        <div class="day-title">周一 · 花果山西游版</div>
+        <div class="day-sub">高铁 18:55 - 22:33 ｜ 回上海</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">07:00</div>
+        <div class="tl-text">墟沟酒店退房，行李随身带走</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">07:30</div>
+        <div class="tl-text">打车前往花果山
+          <span class="sub">约50–60分钟，周一早高峰预留时间</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">08:30</div>
+        <div class="tl-text"><span class="tag warn">寄存</span>抵达花果山景区，<b>先到游客中心寄存行李</b>
+          <span class="sub">提前公众号预约购票，景交车必买</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">08:30–14:30</div>
+        <div class="tl-text">游览花果山：玉女峰、水帘洞、三元宫、怪石园
+          <span class="sub">约6小时，猴子会抢零食，背包拉链拉好</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">14:30–15:00</div>
+        <div class="tl-text">景区门口简餐，回游客中心取行李</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">15:00–15:30</div>
+        <div class="tl-text">打车从花果山前往连云港站
+          <span class="sub">约40–50分钟，周一傍晚预留堵车</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">16:15</div>
+        <div class="tl-text">抵达连云港站，安检候车</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time wide">16:30–17:45</div>
+        <div class="tl-text">可选：盐河巷闲逛、休息、买伴手礼</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">17:45</div>
+        <div class="tl-text">返回车站</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:25</div>
+        <div class="tl-text">进站安检候车</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:55</div>
+        <div class="tl-text"><span class="tag train">高铁</span>发车返回上海</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">22:33</div>
+        <div class="tl-text"><span class="hl">抵达上海</span>
+          <span class="sub">注意地铁末班，提前备好打车方案</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 行李方案 ============ -->
+  <div class="tip-block blue">
+    <div class="tip-title">🧳 D4 行李寄存方案</div>
+
+    <div class="luggage-option">
+      <div class="lo-title"><span class="lo-num">1</span>智游连云港小程序 <span class="recommend-badge">推荐</span></div>
+      <p>微信搜索“智游连云港·行李寄存寄送服务”，可选<b>静态寄存</b>（存在花果山服务点，游玩后自取）或<b>动态托运</b>（直接寄送到连云港站）。大/中/小三种规格，最大可存30寸行李箱，支持实时追踪。</p>
+    </div>
+
+    <div class="luggage-option">
+      <div class="lo-title"><span class="lo-num">2</span>游客中心免费寄存柜</div>
+      <p>花果山游客中心设有免费行李寄存柜，建议出发前致电景区 <b>0518-85726318</b> 确认当天可用情况及柜子大小。</p>
+    </div>
+
+    <div class="luggage-option">
+      <div class="lo-title"><span class="lo-num">3</span>包车 / 行李随车</div>
+      <p>早上从酒店退房后直接带行李打车去花果山，和司机约好下午来接，行李一直放车上，下山后直接去高铁站。</p>
+    </div>
+
+    <p style="font-size:12.5px;color:#7d99a4;margin-top:6px;margin-left:0;">
+      ⚠️ 不要把行李寄存在墟沟酒店，否则需从花果山折返取行李，至少多花1小时，容易误车。
+    </p>
+  </div>
+
+  <!-- ============ 关键贴士 ============ -->
+  <div class="tip-block">
+    <div class="tip-title">📌 关键贴士</div>
+    <ul>
+      <li><b>D3 徐州段必须07:30退房</b>，9:18发车，不能按08:00才退。</li>
+      <li><b>连云港站→墟沟</b>实际车程约40–50分钟，不是30分钟。</li>
+      <li><b>连岛看日落</b>：夏季日落通常在18:30–19:00，注意景区观光车末班时间。</li>
+      <li><b>D4 花果山游览约6小时</b>，最晚15:30前离开景区。</li>
+      <li><b>D4 行李寄存在花果山游客中心</b>，不要回墟沟取。</li>
+      <li><b>D4 18:55发车，18:20前到站最稳</b>，周一傍晚有晚高峰。</li>
+      <li><b>22:33到上海</b>，提前查地铁末班，备好打车方案。</li>
+      <li><b>徐州博物馆</b>周六热门，提前7天20点抢预约，带身份证入馆。</li>
+      <li><b>花果山猴子</b>会抢零食，不要手拿食物，背包拉链拉好。</li>
+    </ul>
+  </div>
+
+  <!-- ============ 一页速览 ============ -->
+  <div class="tip-block blue">
+    <div class="tip-title">📋 一页速览</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px;">
+      <div style="display:flex;gap:10px;">
+        <span style="flex-shrink:0;font-weight:700;color:#3d8fa3;width:30px;">D1</span>
+        <span style="color:#4a5c63;">上海→徐州东（18:45到）→ 回龙窝 → 富国街夜宵 ｜ <b>宿：龙泰大厦</b></span>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <span style="flex-shrink:0;font-weight:700;color:#3d8fa3;width:30px;">D2</span>
+        <span style="color:#4a5c63;">徐州博物馆 → 户部山 → 云龙山 → 云龙湖 ｜ <b>宿：龙泰大厦</b></span>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <span style="flex-shrink:0;font-weight:700;color:#3d8fa3;width:30px;">D3</span>
+        <span style="color:#4a5c63;">徐州东（9:18发）→ 连云港（10:26到）→ 连岛 → 在海一方 ｜ <b>宿：墟沟</b></span>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <span style="flex-shrink:0;font-weight:700;color:#3d8fa3;width:30px;">D4</span>
+        <span style="color:#4a5c63;">花果山（寄存行李，玩到14:30）→ 连云港站（18:55发）→ 上海（22:33到）</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    祝旅途顺利 · 汉风黄海 4天3晚
+  </div>
+
+</div>
+</body>
+</html>

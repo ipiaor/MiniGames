@@ -1,3 +1,5 @@
+这是为您更新后的工具集页面HTML代码。它在原有卡片基础上，新增了“徐州+连云港攻略”的导航卡片，保持了一致的视觉风格和响应式布局，方便您快速访问行程页面。
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -145,6 +147,16 @@
             margin-top: 0.5rem;
         }
 
+        /* 旅行卡片专属色调 */
+        .card.travel .card-tag {
+            color: #2f6b80;
+            background: #e3f0f5;
+        }
+
+        .card.travel:hover {
+            border-color: rgba(61, 143, 163, 0.3);
+        }
+
         /* 脚注 + github 锚点 */
         .footer-note {
             text-align: center;
@@ -200,7 +212,7 @@
         </div>
     </div>
 
-    <!-- 导航卡片区：指向同目录下的 calculator1.html 和 calculator2.html -->
+    <!-- 导航卡片区：指向同目录下的 calculator1.html / calculator2.html / xuzhou.html -->
     <div class="tools-grid">
         <!-- 碳循环计算器 -->
         <a href="calculator1.html" class="card" aria-label="碳循环计算器">
@@ -223,6 +235,17 @@
             </p>
             <span class="card-tag">calculator2.html →</span>
         </a>
+
+        <!-- 徐州+连云港旅行攻略 -->
+        <a href="xuzhou.html" class="card travel" aria-label="徐州连云港4天3晚攻略">
+            <div class="card-icon">🏯🌊</div>
+            <h2>徐州+连云港攻略</h2>
+            <p>
+                汉风黄海 · 4天3晚行程：徐州两汉老城 + 连云港连岛花果山。<br>
+                含每日时间线、行李寄存方案与关键贴士。
+            </p>
+            <span class="card-tag">xuzhou.html →</span>
+        </a>
     </div>
 
     <div class="footer-note">
@@ -233,9 +256,10 @@
             <span>🐙</span> github.com/ipiaor
         </a>
         <div style="margin-top: 12px; font-size: 0.75rem;">
-            📂 仓库结构：index.html | calculator1.html | calculator2.html
+            📂 仓库结构：index.html | calculator1.html | calculator2.html | xuzhou.html
         </div>
     </div>
 </div>
 </body>
 </html>
+```
